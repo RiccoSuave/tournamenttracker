@@ -1,0 +1,87 @@
+After installing microsoft sql server I used this link: https://docs.microsoft.com/en-us/sql/relational-databases/databases/view-a-list-of-databases-on-an-instance-of-sql-server to find the command to show all the available databases within microsoft sql, which come by default. Here is the output: 
+--
+-- run below commmand from command prompt
+-- sqlcmd -S DESKTOP-AR1PJAA -E
+--
+
+select @@Version
+go
+                                                                                                                                                                                                                                                
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Microsoft SQL Server 2017 (RTM) - 14.0.1000.169 (X64)
+        Aug 22 2017 17:04:49
+        Copyright (C) 2017 Microsoft Corporation
+        Developer Edition (64-bit) on Windows 10 Home 10.0 <X64> (Build 16299: )
+
+
+(1 rows affected)
+1> show
+2> go
+Msg 2812, Level 16, State 62, Server DESKTOP-AR1PJAA, Line 1
+Could not find stored procedure 'show'.
+1> :help
+:!! [<command>]
+  - Executes a command in the Windows command shell.
+:connect server[\instance] [-l timeout] [-U user [-P password]]
+  - Connects to a SQL Server instance.
+:ed
+  - Edits the current or last executed statement cache.
+:error <dest>
+  - Redirects error output to a file, stderr, or stdout.
+:exit
+  - Quits sqlcmd immediately.
+:exit()
+  - Execute statement cache; quit with no return value.
+:exit(<query>)
+  - Execute the specified query; returns numeric result.
+go [<n>]
+  - Executes the statement cache (n times).
+:help
+  - Shows this list of commands.
+:list
+  - Prints the content of the statement cache.
+:listvar
+  - Lists the set sqlcmd scripting variables.
+:on error [exit|ignore]
+  - Action for batch or sqlcmd command errors.
+:out <filename>|stderr|stdout
+  - Redirects query output to a file, stderr, or stdout.
+:perftrace <filename>|stderr|stdout
+  - Redirects timing output to a file, stderr, or stdout.
+:quit
+  - Quits sqlcmd immediately.
+:r <filename>
+  - Append file contents to the statement cache.
+:reset
+  - Discards the statement cache.
+:serverlist
+  - Lists local and SQL Servers on the network.
+:setvar {variable}
+  - Removes a sqlcmd scripting variable.
+:setvar <variable> <value>
+  - Sets a sqlcmd scripting variable.
+1> :serverlist
+
+Servers:
+    (local)
+    DESKTOP-AR1PJAA
+1> :show
+2> go
+Msg 102, Level 15, State 1, Server DESKTOP-AR1PJAA, Line 1
+Incorrect syntax near ':'.
+1> use AdventureWorks2012;
+2> go
+Msg 911, Level 16, State 1, Server DESKTOP-AR1PJAA, Line 1
+Database 'AdventureWorks2012' does not exist. Make sure that the name is entered correctly.
+1> select name, database_id, create_date
+2> from sys.databases;
+3> go
+name                                                                                                                             database_id create_date
+-------------------------------------------------------------------------------------------------------------------------------- ----------- -----------------------
+master                                                                                                                                     1 2003-04-08 09:13:36.390
+tempdb                                                                                                                                     2 2018-04-08 15:20:59.943
+model                                                                  <-----Here                                                          3 2003-04-08 09:13:36.390
+msdb                                                                                                                                       4 2017-08-22 19:39:22.887
+
+(4 rows affected)
+1>
