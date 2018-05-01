@@ -8,9 +8,11 @@ namespace TrackerLibrary.Models
 {
     public class TeamModel
     {
+        public int Id { get; set; }
+        public string TeamName { get; set; }
         // = ... initializes the List; it is short cut since C# v 6.0 
         public List<PersonModel> TeamMembers { get; set; } = new List<PersonModel>();
-        public string TeamName { get; set; }
+        
         // The otherway to initialize the list of person is
         /*
          * 

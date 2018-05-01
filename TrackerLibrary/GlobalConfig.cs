@@ -10,7 +10,8 @@ namespace TrackerLibrary
 {
     public static class GlobalConfig
     {
-        public static IDataConnection Connection { get; private set; } 
+        public static IDataConnection Connection { get; private set; }
+        
         public static void InitializeConnections (DatabaseType db)
         {
             if (db == DatabaseType.Sql)
@@ -27,7 +28,13 @@ namespace TrackerLibrary
                 //Connections.Add(text);
                 Connection = text;
             }
-
+            else if (db == DatabaseType.All)
+            {
+                TextConnector text = new TextConnector();
+                Connection = text;
+                SqlConnector sql = new SqlConnector();
+                Connection = sql;
+            }
         }
         public static string CnnString (string name)
         {

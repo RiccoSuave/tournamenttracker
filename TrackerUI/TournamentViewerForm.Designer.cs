@@ -43,6 +43,8 @@
             this.teamTwoName = new System.Windows.Forms.Label();
             this.versusLabel = new System.Windows.Forms.Label();
             this.scoreButton = new System.Windows.Forms.Button();
+            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.databaseLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // headerLabel
@@ -85,6 +87,7 @@
             this.roundDropDown.Name = "roundDropDown";
             this.roundDropDown.Size = new System.Drawing.Size(357, 53);
             this.roundDropDown.TabIndex = 3;
+            this.roundDropDown.SelectedIndexChanged += new System.EventHandler(this.roundDropDown_SelectedIndexChanged);
             // 
             // unplayedOnlyCheckbox
             // 
@@ -193,12 +196,34 @@
             this.scoreButton.Text = "Score";
             this.scoreButton.UseVisualStyleBackColor = true;
             // 
+            // comboBox2
+            // 
+            this.comboBox2.FormattingEnabled = true;
+            this.comboBox2.Location = new System.Drawing.Point(386, 517);
+            this.comboBox2.Name = "comboBox2";
+            this.comboBox2.Size = new System.Drawing.Size(357, 53);
+            this.comboBox2.TabIndex = 16;
+            this.comboBox2.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
+            // 
+            // databaseLabel
+            // 
+            this.databaseLabel.AutoSize = true;
+            this.databaseLabel.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.databaseLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(153)))), ((int)(((byte)(255)))));
+            this.databaseLabel.Location = new System.Drawing.Point(38, 517);
+            this.databaseLabel.Name = "databaseLabel";
+            this.databaseLabel.Size = new System.Drawing.Size(362, 54);
+            this.databaseLabel.TabIndex = 15;
+            this.databaseLabel.Text = "StorageDestination";
+            // 
             // TournamentViewerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(18F, 45F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(985, 506);
+            this.ClientSize = new System.Drawing.Size(985, 601);
+            this.Controls.Add(this.comboBox2);
+            this.Controls.Add(this.databaseLabel);
             this.Controls.Add(this.scoreButton);
             this.Controls.Add(this.versusLabel);
             this.Controls.Add(this.teamTwoScoreText);
@@ -239,6 +264,8 @@
         private System.Windows.Forms.Label teamTwoName;
         private System.Windows.Forms.Label versusLabel;
         private System.Windows.Forms.Button scoreButton;
+        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.Label databaseLabel;
     }
 }
 
