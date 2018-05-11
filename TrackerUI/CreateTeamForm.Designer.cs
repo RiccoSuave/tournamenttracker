@@ -69,6 +69,7 @@
             this.teamNameValue.Name = "teamNameValue";
             this.teamNameValue.Size = new System.Drawing.Size(507, 50);
             this.teamNameValue.TabIndex = 27;
+            this.teamNameValue.TextChanged += new System.EventHandler(this.teamNameValue_TextChanged);
             // 
             // createTeamLabel
             // 

@@ -1,12 +1,11 @@
 C:\Users\zohal\source\repos\TounamentTracker\TrackerLibrary\bin\Debug\TrackerLibrary.dll
 C:\Users\zohal\source\repos\TounamentTracker\TrackerLibrary\bin\Debug\TrackerLibrary.pdb
-C:\Users\zohal\source\repos\TounamentTracker\TrackerLibrary\obj\Debug\TrackerLibrary.csprojResolveAssemblyReference.cache
 C:\Users\zohal\source\repos\TounamentTracker\TrackerLibrary\obj\Debug\TrackerLibrary.CreateTeamForm.resources
 C:\Users\zohal\source\repos\TounamentTracker\TrackerLibrary\obj\Debug\TrackerLibrary.csproj.GenerateResource.cache
 C:\Users\zohal\source\repos\TounamentTracker\TrackerLibrary\obj\Debug\TrackerLibrary.csproj.CoreCompileInputs.cache
 C:\Users\zohal\source\repos\TounamentTracker\TrackerLibrary\obj\Debug\TrackerLibrary.dll
 C:\Users\zohal\source\repos\TounamentTracker\TrackerLibrary\obj\Debug\TrackerLibrary.pdb
-C:\Users\zohal\source\repos\TounamentTracker\TrackerLibrary\obj\Debug\TrackerLibrary.CreatePrizeForm.resources
 C:\Users\zohal\source\repos\TounamentTracker\TrackerLibrary\bin\Debug\Dapper.dll
 C:\Users\zohal\source\repos\TounamentTracker\TrackerLibrary\bin\Debug\Dapper.xml
 C:\Users\zohal\source\repos\TounamentTracker\TrackerLibrary\obj\Debug\TrackerLibrary.csproj.CopyComplete
+C:\Users\zohal\source\repos\TounamentTracker\TrackerLibrary\obj\Debug\TrackerLibrary.csprojAssemblyReference.cache

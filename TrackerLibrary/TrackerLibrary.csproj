@@ -46,12 +46,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CreatePrizeForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="CreatePrizeForm.Designer.cs">
-      <DependentUpon>CreatePrizeForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="CreateTeamForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -62,6 +56,7 @@
     <Compile Include="Enums.cs" />
     <Compile Include="GlobalConfig.cs" />
     <Compile Include="DataAccess\IDataConnection.cs" />
+    <Compile Include="ITeamRequester.cs" />
     <Compile Include="Models\MatchupEntryModel.cs" />
     <Compile Include="Models\MatchupModel.cs" />
     <Compile Include="Models\PersonModel.cs" />
@@ -73,9 +68,6 @@
     <Compile Include="Models\TournamentModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="CreatePrizeForm.resx">
-      <DependentUpon>CreatePrizeForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="CreateTeamForm.resx">
       <DependentUpon>CreateTeamForm.cs</DependentUpon>
     </EmbeddedResource>

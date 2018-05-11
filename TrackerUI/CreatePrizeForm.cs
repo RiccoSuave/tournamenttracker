@@ -9,14 +9,17 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using TrackerLibrary.DataAccess;
 using TrackerLibrary.Models;
+using TrackerUI;
 
 namespace TrackerLibrary
 {
-    public partial class CreatePrizeForm : Form
+    public partial class CreatePrizeForm : Form 
     {
-        public CreatePrizeForm()
+        IPrizeRequester callingForm;
+        public CreatePrizeForm(IPrizeRequester caller)
         {
             InitializeComponent();
+            callingForm = caller;
         }
 
         private void prizePercentageValueLabel_TextChanged(object sender, EventArgs e)
@@ -34,10 +37,9 @@ namespace TrackerLibrary
                     prizeAmountValue.Text,
                     prizePercentageValue.Text);
                 GlobalConfig.Connection.CreatePrize(model);
-                placeNumberValue.Text = "";
-                palceNameValue.Text = "";
-                prizeAmountValue.Text = "0";
-                prizePercentageValue.Text = "0";
+                callingForm.PrizeComplete(model);
+
+                this.Close();
             }
             else
             {
@@ -80,6 +82,11 @@ namespace TrackerLibrary
                 output = false;
             }
             return output;
+        }
+
+        private void placeNumberValue_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

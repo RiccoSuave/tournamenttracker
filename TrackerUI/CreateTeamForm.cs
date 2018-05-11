@@ -141,5 +141,10 @@ namespace TrackerLibrary
         {
             
         }
+
+        private void teamNameValue_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

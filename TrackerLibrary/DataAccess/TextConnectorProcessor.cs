@@ -12,17 +12,18 @@ namespace TrackerLibrary.DataAccess.TextHelpers
     public static class TextConnectorProcessor
     {
 
-        public static string FullFilePath(this string filename)
+        //public static string FullFilePath(this string fileName)
+        public static string FullFilePath(this string fileName)
         {
-            return $"{ ConfigurationManager.AppSettings["filepath"]}\\filename";
+            return $"{ ConfigurationManager.AppSettings["filePath"]}\\{ fileName }";
         }
-        public static List<string> LoadFile(this string file)
+        public static List<string> LoadFile(this string filename)
         {
-            if (!File.Exists(file))
+            if (!File.Exists(filename))
             {
                 return new List<string>();
             }
-            return File.ReadAllLines(file).ToList();
+            return File.ReadAllLines(filename).ToList();
         }
         public static List<PrizeModel> ConverToPrizeModels(this  List<string> lines)
         {
@@ -37,6 +38,7 @@ namespace TrackerLibrary.DataAccess.TextHelpers
                 p.PrizeAmount = decimal.Parse(cols[3]);
                 p.PrizePercentage = double.Parse(cols[4]);
                 output.Add(p);
+                
             }
             return output;
         }
@@ -57,11 +59,13 @@ namespace TrackerLibrary.DataAccess.TextHelpers
             return output;
         }
         public static List<TeamModel> ConvertToTeamModels (this List<string> lines, string peopleFileName)
+        //public static List<TeamModel> ConvertToTeamModels(this List<string> lines, string fileName)
         {
             // id, team name, list of ids separated by the pipe 
             // 3, Tim's Team, 1|3|5
             List<TeamModel> output = new List<TeamModel>();
             List<PersonModel> people = peopleFileName.FullFilePath().LoadFile().ConvertToPersonModels();
+            //List<PersonModel> people = fileName.FullFilePath().LoadFile().ConvertToPersonModels();
             foreach (string line in lines)
             {
                 string[] cols = line.Split(',');
@@ -73,6 +77,7 @@ namespace TrackerLibrary.DataAccess.TextHelpers
                 {
                     t.TeamMembers.Add(people.Where(x => x.Id == int.Parse(id)).First());
                 }
+                output.Add(t);
             }
             return output;
         }
@@ -90,7 +95,7 @@ namespace TrackerLibrary.DataAccess.TextHelpers
             List<string> lines = new List<string>();
             foreach (PersonModel p in models)
             {
-                lines.Add($"{p.Id}, {p.FirstName}, {p.LastName}, {p.EmailAddress}, {p.CellPhoneNumber}");
+                lines.Add($"{ p.Id },{ p.FirstName },{ p.LastName },{ p.EmailAddress },{ p.CellPhoneNumber }");
             }
             File.WriteAllLines(fileName.FullFilePath(), lines);
         }
