@@ -11,7 +11,7 @@ namespace TrackerLibrary.Models
         /// <summary>
         /// The unique identifier for the trounament 
         /// </summary> 
-        public int id { get; set; }
+        public int Id { get; set; }
         /// <summary>
         /// The name os tournament 
         /// </summary>

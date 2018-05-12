@@ -1,6 +1,10 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\TrackerLibrary",
+    "\\TrackerLibrary\\DataAccess",
+    "\\TrackerUI"
   ],
+  "SelectedNode": "\\TrackerLibrary\\DataAccess\\IDataConnection.cs",
   "PreviewInSolutionExplorer": false
 }
