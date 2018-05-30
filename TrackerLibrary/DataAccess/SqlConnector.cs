@@ -115,8 +115,9 @@ namespace TrackerLibrary.DataAccess
             {
                 var p = new DynamicParameters();
                 p.Add("@TournamentId", model.Id);
-                p.Add("@PrizeId", tm.Id);
+                //p.Add("@PrizeId", tm.Id);
                 //p.Add("@PrizeId", model.Prizes);
+                p.Add("@PrizeId", model.Prizes.First().Id);
                 p.Add("@Id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
                 connection.Execute("spTournamentPrizes_Insert", p, commandType: CommandType.StoredProcedure);
             }
