@@ -121,7 +121,7 @@ namespace TrackerLibrary.DataAccess
                 p.Add("@PrizeId", model.Prizes.First().Id);
                 p.Add("@Id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
                 connection.Execute("spTournamentPrizes_Insert", p, commandType: CommandType.StoredProcedure);
-                MessageBox.Show("This is the prize you just pushed to the Database." , model.Prizes.First().Id.ToString());
+                MessageBox.Show("This is the prize you just pushed to the Database." , model.Prizes.First().PrizeAmount.ToString());
 
             }
         }
