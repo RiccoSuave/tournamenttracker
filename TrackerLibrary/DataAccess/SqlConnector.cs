@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using TrackerLibrary.Models;
 
 namespace TrackerLibrary.DataAccess
@@ -102,9 +103,9 @@ namespace TrackerLibrary.DataAccess
             {
                 var p = new DynamicParameters();
                 p.Add("@TournamentId", model.Id);
-                p.Add("@TeamId", pz.Id);
+                p.Add("@PrizeID", pz.Id);
                 p.Add("@id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
-                connection.Execute("spTournamentEntry_Insert", p, commandType: CommandType.StoredProcedure);
+                connection.Execute("spTournamentPrizes_Insert", p, commandType: CommandType.StoredProcedure);
 
             }
         }
@@ -120,6 +121,8 @@ namespace TrackerLibrary.DataAccess
                 p.Add("@PrizeId", model.Prizes.First().Id);
                 p.Add("@Id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
                 connection.Execute("spTournamentPrizes_Insert", p, commandType: CommandType.StoredProcedure);
+                MessageBox.Show("This is the prize you just pushed to the Database." , model.Prizes.First().Id.ToString());
+
             }
         }
         private void SaveTournamentRounds (IDbConnection connection, TournamentModel model)
