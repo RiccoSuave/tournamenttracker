@@ -138,23 +138,24 @@ namespace TrackerLibrary.DataAccess
                 foreach (MatchupModel matchup in round)
                 {
                     var p = new DynamicParameters();
+                    //p.Add("WinnerID", matchup.Winner);
                     p.Add("@TournamentId", model.Id);
                     p.Add("@MatchupRound", matchup.MatchupRound);
-                    p.Add("@id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
+                    p.Add("@Id", 0, dbType: DbType.Int32, direction: ParameterDirection.Output);
                     connection.Execute("dbo.spMatchups_Insert", p, commandType: CommandType.StoredProcedure);
-                    matchup.Id = p.Get<int>("@id");
+                    matchup.Id = p.Get<int>("@Id");
                     foreach (MatchupEntryModel entry in matchup.Entries)
                     {
                         p = new DynamicParameters();
                         p.Add("@MatchupId", matchup.Id);
-                        p.Add("@ParentMatchupId", entry.ParentMatchup.Id);
+                        //p.Add("@ParentMatchupId", entry.ParentMatchup.Id);
                         if (entry.ParentMatchup == null)
                         {
-                            p.Add("@ParentMatchup", null);
+                            p.Add("@ParentMatchupID", null);
                         }
                         else
                         {
-                            p.Add("@ParentMatchup", entry.ParentMatchup.Id);
+                            p.Add("@ParentMatchupID", entry.ParentMatchup.Id);
                         }
                         if (entry.TeamCompeting == null)
                         {

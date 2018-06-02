@@ -115,7 +115,7 @@ namespace TrackerUI
             TournamentModel tm = new TournamentModel();
             tm.TournamentName = tournamentNameValue.Text;
             tm.EntryFee = fee;
-
+            tm.EnteredTeams = selectedTeams;
             // Create our matchups
             //TODO -- Wireup matchup  
             TournamentLogic.CreateRounds(tm);
@@ -126,6 +126,11 @@ namespace TrackerUI
             tm.EnteredTeams = selectedTeams;
             // Create all of the team entries 
             GlobalConfig.Connection.CreateTournament(tm);
+
+        }
+
+        private void tournamentTeamsListbox_SelectedIndexChanged(object sender, EventArgs e)
+        {
 
         }
     }

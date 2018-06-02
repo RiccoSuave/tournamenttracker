@@ -169,6 +169,7 @@ namespace TrackerUI
             this.tournamentTeamsListbox.Name = "tournamentTeamsListbox";
             this.tournamentTeamsListbox.Size = new System.Drawing.Size(373, 182);
             this.tournamentTeamsListbox.TabIndex = 19;
+            this.tournamentTeamsListbox.SelectedIndexChanged += new System.EventHandler(this.tournamentTeamsListbox_SelectedIndexChanged);
             // 
             // removeSelectedPlayerButton
             // 
