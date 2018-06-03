@@ -71,9 +71,9 @@ namespace TrackerLibrary.DataAccess
             int currentId = 1;
             if (tournaments.Count > 0)
             {
-                currentId = tournaments.OrderByDescending(x => x.Id).First().Id + 1;
+                currentId = tournaments.OrderByDescending(x => x.id).First().id + 1;
             }
-            model.Id = currentId;
+            model.id = currentId;
             tournaments.Add(model);
             tournaments.SaveToTournamentFile(TournamentFile);
             

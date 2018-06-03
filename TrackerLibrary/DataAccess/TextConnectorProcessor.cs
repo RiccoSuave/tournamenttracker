@@ -92,7 +92,7 @@ namespace TrackerLibrary.DataAccess.TextHelpers
             {
                 string [] cols = line.Split(',');
                 TournamentModel tm = new TournamentModel();
-                tm.Id = int.Parse(cols[0]);
+                tm.id = int.Parse(cols[0]);
                 //tm.Id = cols[0];  // error: can not implicitly convert string to int
                 tm.TournamentName = cols[1];
                 tm.EntryFee = decimal.Parse(cols[2]);
@@ -149,7 +149,7 @@ namespace TrackerLibrary.DataAccess.TextHelpers
             List<string> lines = new List<string>();
             foreach (TournamentModel tm in models)
             {
-                lines.Add($@"{ tm.Id },
+                lines.Add($@"{ tm.id },
                 { tm.TournamentName },
                 { tm.EntryFee },
                 { ConvertTeamListToString(tm.EnteredTeams) },

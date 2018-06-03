@@ -74,7 +74,8 @@ namespace TrackerLibrary
             {
                 totalTeams *= 2;
             }
-            output = totalTeams - numberOfTeams;
+            //output = totalTeams - numberOfTeams;
+            output = numberOfTeams - totalTeams;
             return output;
         }
         private static int FindNumberOfRounds(int teamCount)
