@@ -152,11 +152,11 @@ namespace TrackerLibrary.DataAccess
                         //p.Add("@ParentMatchupId", entry.ParentMatchup.Id);
                         if (entry.ParentMatchup == null)
                         {
-                            p.Add("@ParentMatchupID", null);
+                            p.Add("@ParentMatchupId", null);
                         }
                         else
                         {
-                            p.Add("@ParentMatchupID", entry.ParentMatchup.Id);
+                            p.Add("@ParentMatchupId", entry.ParentMatchup.Id);
                         }
                         if (entry.TeamCompeting == null)
                         {
