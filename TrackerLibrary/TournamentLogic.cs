@@ -21,6 +21,7 @@ namespace TrackerLibrary
             model.Rounds.Add(CreateFirstRound(byes, randomizedTeams));
             CreateOtherRounds(model, rounds);
         }
+        // This method seems to add one more entry - I think I have watch episode 18 again
         private static void CreateOtherRounds(TournamentModel model, int rounds)
         {
             int round = 2;
@@ -42,7 +43,7 @@ namespace TrackerLibrary
                 }
                 model.Rounds.Add(currRound);
                 previousRound = currRound;
-                model.Rounds.Add(currRound);
+                currRound = new List<MatchupModel>();
                 round += 1;
             }
         }
@@ -70,12 +71,12 @@ namespace TrackerLibrary
         {
             int output = 0;
             int totalTeams = 1;
-            for (int i = 1; i < rounds; i++)
+            for (int i = 1; i <= rounds; i++)
             {
                 totalTeams *= 2;
             }
-            //output = totalTeams - numberOfTeams;
-            output = numberOfTeams - totalTeams;
+            output = totalTeams - numberOfTeams;
+            //output = numberOfTeams - totalTeams;
             return output;
         }
         private static int FindNumberOfRounds(int teamCount)
