@@ -14,6 +14,8 @@ namespace TrackerLibrary.DataAccess
         private const string PeopleFile = "PersonModels.csv";
         private const string TeamFile = "TeamModels.csv";
         private const string TournamentFile = "TournamentFile.csv";
+        private const string MatchupFile = "MatchupModels.csv";
+        private const string MatchupEntriesFile = "MatchupEntryModel.csv";
         public PersonModel CreatePerson(PersonModel model)
         {
             List<PersonModel> people = PeopleFile.FullFilePath().LoadFile().ConvertToPersonModels();
@@ -74,6 +76,10 @@ namespace TrackerLibrary.DataAccess
                 currentId = tournaments.OrderByDescending(x => x.id).First().id + 1;
             }
             model.id = currentId;
+            // the line below is how Tim had it, but it gives me error so I used the other option
+            // which is MatchupEntriesFile
+            //model.SaveRoundsToFile( MatchupFile, MatchupEntryFile);
+            model.SaveRoundsToFile(MatchupFile, MatchupEntriesFile);
             tournaments.Add(model);
             tournaments.SaveToTournamentFile(TournamentFile);
             
