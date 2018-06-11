@@ -315,7 +315,7 @@ namespace TrackerLibrary.DataAccess.TextHelpers
                 {
                     winner = m.Winner.Id.ToString();
                 }
-                lines.Add($"{ m.Id },{ ConvertMatchupEntryListToString(m.Entries) },{ m.Winner.Id },{ m.MatchupRound }");
+                lines.Add($"{ m.Id },{ ConvertMatchupEntryListToString(m.Entries) },{ winner },{ m.MatchupRound }");
             }
             File.WriteAllLines(GlobalConfig.MatchupFile.FullFilePath(), lines);
              
@@ -345,7 +345,7 @@ namespace TrackerLibrary.DataAccess.TextHelpers
                 {
                     teamCompeting = e.TeamCompeting.Id.ToString();
                 }
-                lines.Add($"{ e.Id },{ teamCompeting },{ e.Score },{ e.ParentMatchup.Id }");
+                lines.Add($"{ e.Id },{ teamCompeting },{ e.Score },{ parent }");
             }
             // TODO -- You may have an issue with the line below. Tim's file was GlobalConfig.MatchupEntryFile
             File.WriteAllLines(GlobalConfig.MatchupEntriesFile.FullFilePath(), lines);
