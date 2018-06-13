@@ -7,24 +7,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TrackerLibrary;
 
 namespace TrackerUI
 {
     public partial class TournamentDashboardForm : Form
+
     {
+        List<CreateTournamentForm> tournaments = GlobalConfig.Connection.GetTournament_All();
         public TournamentDashboardForm()
         {
             InitializeComponent();
-        }
-
-        private void selectTeamMemberLabel_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void SelectTeamMemeberDropDown_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }
