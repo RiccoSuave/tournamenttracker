@@ -1,4 +1,6 @@
-﻿namespace TrackerUI
+﻿using System;
+
+namespace TrackerUI
 {
     partial class TournamentDashboardForm
     {
@@ -54,7 +56,6 @@
             this.loadExistingTournamentDropDown.Name = "loadExistingTournamentDropDown";
             this.loadExistingTournamentDropDown.Size = new System.Drawing.Size(507, 53);
             this.loadExistingTournamentDropDown.TabIndex = 32;
-            this.loadExistingTournamentDropDown.SelectedIndexChanged += new System.EventHandler(this.SelectTeamMemeberDropDown_SelectedIndexChanged);
             // 
             // loadExistingTournamentLabel
             // 
@@ -97,6 +98,7 @@
             this.createTournamentButton.TabIndex = 37;
             this.createTournamentButton.Text = "Create Tournament";
             this.createTournamentButton.UseVisualStyleBackColor = true;
+            this.createTournamentButton.Click += new System.EventHandler(this.createTournamentButton_Click);
             // 
             // TournamentDashboardForm
             // 
@@ -118,6 +120,13 @@
             this.PerformLayout();
 
         }
+
+        private void selectTeamMemberLabel_Click(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+
 
         #endregion
 

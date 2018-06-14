@@ -73,9 +73,9 @@ namespace TrackerLibrary.DataAccess
             int currentId = 1;
             if (tournaments.Count > 0)
             {
-                currentId = tournaments.OrderByDescending(x => x.id).First().id + 1;
+                currentId = tournaments.OrderByDescending(x => x.Id).First().Id + 1;
             }
-            model.id = currentId;
+            model.Id = currentId;
             // the line below is how Tim had it, but it gives me error so I used the other option
             // which is MatchupEntriesFile
             //model.SaveRoundsToFile( MatchupFile, MatchupEntryFile);
@@ -93,6 +93,11 @@ namespace TrackerLibrary.DataAccess
         public List<TeamModel> GetTeam_All()
         {
             return TeamFile.FullFilePath().LoadFile().ConvertToTeamModels(PeopleFile);
+        }
+
+        public List<TournamentModel> GetTournament_All()
+        {
+            return TournamentFile.FullFilePath().LoadFile().ConvertToTournamentModels(TeamFile, PeopleFile, PrizesFile);
         }
     }
 }

@@ -211,9 +211,12 @@ namespace TrackerLibrary.DataAccess
                 {
                     //Once we have the list of tournaments,...
                     //populate prizes 
-                    t.Prizes = connection.Query<PrizeModel>("dbo.spPrizes_GetByTournament").ToList();
+                    p = new DynamicParameters();
+                    p.Add("@TournamentId", t.Id);
+                    t.Prizes = connection.Query<PrizeModel>("dbo.spPrizes_GetByTournament", p, commandType: CommandType.StoredProcedure).ToList();
                     //populate teams
-                    t.EnteredTeams = connection.Query<TeamModel>("dbo.spTeam_GetByTournament").ToList();
+   
+                    t.EnteredTeams = connection.Query<TeamModel>("dbo.spTeam_GetByTournament", p, commandType: CommandType.StoredProcedure).ToList();
                     foreach (TeamModel team in t.EnteredTeams)
                     {
                         p = new DynamicParameters();
@@ -249,6 +252,22 @@ namespace TrackerLibrary.DataAccess
                             }
                         }
                     }
+                    // rounds are List<List<MatchupModel>>
+                    List<MatchupModel> currRow = new List<MatchupModel>();
+                    int currRound = 1;
+                    foreach (MatchupModel m in matchups)
+                    {
+                        //If the round has changed, then...
+                        if (m.MatchupRound > currRound)
+                        {
+                            t.Rounds.Add(currRow);
+                            currRow = new List<MatchupModel>();
+                            currRound += 1;
+                        }
+                        // If the round has not changed 
+                        currRow.Add(m);
+                    }
+                    t.Rounds.Add(currRow);
                 }
 
             }
