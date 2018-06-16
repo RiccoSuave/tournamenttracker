@@ -1,0 +1,13 @@
+If you ever wanna delete the enteries of a table with foreign keys you do ...
+alter table dbo.[Tournament Prizes] nocheck constraint all
+alter table dbo.Matchups nocheck constraint all
+delete from dbo.Tournaments
+alter table dbo.TournamentEntries check constraint all 
+alter table dbo.[Tournament Prizes] check constraint all
+alter table dbo.Matchups check constraint all
+
+truncate table dbo.tournaments
+
+select * from dbo.[Tournament Prizes]
+
+select * from dbo.Tournaments
