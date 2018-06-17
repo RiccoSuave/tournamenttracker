@@ -29,8 +29,10 @@ namespace TrackerUI
         {
             InitializeComponent();
             tournament = tournamentModel;
-            WireUpRoundsLists();
-            WireUpMatchUpsLists();
+            WireUpLists();
+            // We deleted the method below to go from having two methods of WireUpRoundsList and WireUpMatchupsList
+            // to one of just one wireup method call WireUpLists();
+            //WireUpMatchUpsLists();
             LoadFormData();
             LoadRounds();
 
@@ -39,21 +41,15 @@ namespace TrackerUI
         {
             tournamentName.Text = tournament.TournamentName;
         }
-        private void WireUpRoundsLists()
+        private void WireUpLists()
         {
             //roundDropDown.DataSource = null;
             
             roundDropDown.DataSource = rounds;
-           
-
-        }
-        private void WireUpMatchUpsLists()
-        {
-            //matchupListbox.DataSource = null;
-            //matchupsBinding.DataSource = selectedMatchups;
-            //matchupListbox.DataSource = matchupsBinding;
             matchupListbox.DataSource = selectedMatchups;
-            matchupListbox.DisplayMember = "DisplayName";
+            matchupListbox.DisplayMember = "DisplayName";   
+
+
         }
         private void LoadRounds()
         {
@@ -76,6 +72,8 @@ namespace TrackerUI
             }
             //roundsBinding.ResetBindings(false);
             //WireUpRoundsLists();
+            // What adding the statement below does is it creates round one as soon as we load all the matchups 
+            LoadMatchups(1);
         }
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -106,11 +104,11 @@ namespace TrackerUI
         // the list
         private void roundDropDown_SelectedIndexChanged(object sender, EventArgs e)
         {
-            LoadMatchups();
+            LoadMatchups((int)roundDropDown.SelectedItem);
         }
-        private void LoadMatchups()
+        private void LoadMatchups(int round)
         {
-            int round = (int)roundDropDown.SelectedItem;
+            //int round = (int)roundDropDown.SelectedItem;
             foreach (List<MatchupModel> matchups in tournament.Rounds)
             {
                 if (matchups.First().MatchupRound == round)
@@ -118,9 +116,19 @@ namespace TrackerUI
                     // In order to fix the type mismatch issue between a bindng list and an actual list, we 
                     // initialized a new BindingList and passed to the constructor an object of type iList,
                     // which list is of type iList.
-                    selectedMatchups = new BindingList<MatchupModel> (matchups);
+                    // Since we foundout we could not instantiate a new rounds list, we know that we can not 
+                    // instantiate a new matchups list, done below,  if we want the matchups to populate between 
+                    // the dashboard and TournamentViewer form. 
+                    //selectedMatchups = new BindingList<MatchupModel> (matchups);
+                    // instead...
+                    selectedMatchups.Clear();
+                    foreach (MatchupModel m in matchups)
+                    {
+                        selectedMatchups.Add(m);
+                    }
 
                 }
+                LoadMatchup(selectedMatchups.First());
             }
             // true / false parameter resets or not the metadata in binging speciffied 
             //matchupsBinding.ResetBindings(false);
@@ -130,9 +138,9 @@ namespace TrackerUI
         {
 
         }
-        private void LoadMatchup()
+        private void LoadMatchup(MatchupModel m)
         {
-            MatchupModel m = (MatchupModel)matchupListbox.SelectedItem;
+            //MatchupModel m = (MatchupModel)matchupListbox.SelectedItem;
             for (int i = 0; i < m.Entries.Count; i++)
             {
                 if (i==0)
@@ -169,7 +177,7 @@ namespace TrackerUI
 
         private void matchupListbox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            LoadMatchup();
+            LoadMatchup((MatchupModel)matchupListbox.SelectedItem);
         }
     }
 }
