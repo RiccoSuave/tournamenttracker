@@ -42,22 +42,25 @@ namespace TrackerUI
         private void WireUpRoundsLists()
         {
             //roundDropDown.DataSource = null;
-            roundsBinding.DataSource = rounds;
-            roundDropDown.DataSource = roundsBinding;
+            
             roundDropDown.DataSource = rounds;
+           
 
         }
         private void WireUpMatchUpsLists()
         {
             //matchupListbox.DataSource = null;
-            matchupsBinding.DataSource = selectedMatchups;
-            matchupListbox.DataSource = matchupsBinding;
+            //matchupsBinding.DataSource = selectedMatchups;
+            //matchupListbox.DataSource = matchupsBinding;
             matchupListbox.DataSource = selectedMatchups;
             matchupListbox.DisplayMember = "DisplayName";
         }
         private void LoadRounds()
         {
-            rounds = new List<int>();
+            //rounds = new BindingList<int>();
+            // removing the statement above, and clearing the rounds list fixed the issue of rounds not 
+            // populating, so we can not create a new list, we have to clear the old one. 
+            rounds.Clear();
             rounds.Add(1);
            
             int currRound = 1;
@@ -71,7 +74,7 @@ namespace TrackerUI
                     
                 }
             }
-            roundsBinding.ResetBindings(false);
+            //roundsBinding.ResetBindings(false);
             //WireUpRoundsLists();
         }
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
@@ -112,12 +115,15 @@ namespace TrackerUI
             {
                 if (matchups.First().MatchupRound == round)
                 {
-                    selectedMatchups = matchups;
+                    // In order to fix the type mismatch issue between a bindng list and an actual list, we 
+                    // initialized a new BindingList and passed to the constructor an object of type iList,
+                    // which list is of type iList.
+                    selectedMatchups = new BindingList<MatchupModel> (matchups);
 
                 }
             }
             // true / false parameter resets or not the metadata in binging speciffied 
-            matchupsBinding.ResetBindings(false);
+            //matchupsBinding.ResetBindings(false);
             //WireUpMatchUpsLists();
         }
         private void tournamentName_Click(object sender, EventArgs e)
