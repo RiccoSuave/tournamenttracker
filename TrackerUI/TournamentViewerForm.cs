@@ -19,6 +19,11 @@ namespace TrackerUI
         private TournamentModel tournament;
         List<int> rounds = new List<int>();
         List<MatchupModel> selectedMatchups = new List<MatchupModel>();
+        // Lookup binding source documentation later; findout why it was the old way of doing things 
+        // Also try to figure out why this or the binding list did not fix the issue. Tim fixes this later
+        // but it is not clear what was the root cause. 
+        BindingSource roundsBinding = new BindingSource();
+        BindingSource matchupsBinding = new BindingSource();
         public TournamentViewerForm(TournamentModel tournamentModel)
         {
             InitializeComponent();
@@ -33,13 +38,17 @@ namespace TrackerUI
         }
         private void WireUpRoundsLists()
         {
-            roundDropDown.DataSource = null;
+            //roundDropDown.DataSource = null;
+            roundsBinding.DataSource = rounds;
+            roundDropDown.DataSource = roundsBinding;
             roundDropDown.DataSource = rounds;
 
         }
         private void WireUpMatchUpsLists()
         {
-            matchupListbox.DataSource = null;
+            //matchupListbox.DataSource = null;
+            matchupsBinding.DataSource = selectedMatchups;
+            matchupListbox.DataSource = matchupsBinding;
             matchupListbox.DataSource = selectedMatchups;
             matchupListbox.DisplayMember = "DisplayName";
         }
@@ -59,7 +68,8 @@ namespace TrackerUI
                     
                 }
             }
-            WireUpRoundsLists();
+            roundsBinding.ResetBindings(false);
+            //WireUpRoundsLists();
         }
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -103,7 +113,9 @@ namespace TrackerUI
 
                 }
             }
-            WireUpMatchUpsLists();
+            // true / false parameter resets or not the metadata in binging speciffied 
+            matchupsBinding.ResetBindings(false);
+            //WireUpMatchUpsLists();
         }
         private void tournamentName_Click(object sender, EventArgs e)
         {
