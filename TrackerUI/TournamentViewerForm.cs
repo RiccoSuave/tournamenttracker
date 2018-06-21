@@ -140,41 +140,48 @@ namespace TrackerUI
 
         }
         private void LoadMatchup(MatchupModel m)
-        { 
+        {
             //MatchupModel m = (MatchupModel)matchupListbox.SelectedItem;
             //It looks like when I change to round two of GrandPrix, I get the null reference error 
             //I think it is because there are two many <bye>s
-            for (int i = 0; i < m.Entries.Count; i++)
+            if (m != null)
             {
-                if (i==0)
+                for (int i = 0; i < m.Entries.Count; i++)
                 {
-                    if (m.Entries[0].TeamCompeting != null)
+                    if (i == 0)
                     {
-                        teamOneName.Text = m.Entries[0].TeamCompeting.TeamName;
-                        teamOneScoreValue.Text = m.Entries[0].Score.ToString();
+                        if (m.Entries[0].TeamCompeting != null)
+                        {
+                            teamOneName.Text = m.Entries[0].TeamCompeting.TeamName;
+                            teamOneScoreValue.Text = m.Entries[0].Score.ToString();
 
-                        teamTwoName.Text = "<bye>";
-                        teamTwoScoreValue.Text = "0";
+                            teamTwoName.Text = "<bye>";
+                            teamTwoScoreValue.Text = "0";
+                        }
+                        else
+                        {
+                            teamOneName.Text = "Team Name Not yet set";
+                            teamOneScoreValue.Text = "";
+                        }
                     }
-                    else
+                    if (i == 1)
                     {
-                        teamOneName.Text = "Team Name Not yet set";
-                        teamOneScoreValue.Text = "";
+                        if (m.Entries[1].TeamCompeting != null)
+                        {
+                            teamTwoName.Text = m.Entries[1].TeamCompeting.TeamName;
+                            teamTwoScoreValue.Text = m.Entries[0].Score.ToString();
+                        }
+                        else
+                        {
+                            teamTwoName.Text = "Team Name Not yet set";
+                            teamTwoScoreValue.Text = "";
+                        }
                     }
                 }
-                if (i == 1)
-                {
-                    if (m.Entries[1].TeamCompeting != null)
-                    {
-                        teamTwoName.Text = m.Entries[1].TeamCompeting.TeamName;
-                        teamTwoScoreValue.Text = m.Entries[0].Score.ToString();
-                    }
-                    else
-                    {
-                        teamTwoName.Text = "Team Name Not yet set";
-                        teamTwoScoreValue.Text = "";
-                    }
-                }
+            }
+            else
+            {
+                return;
             }
         }
 
