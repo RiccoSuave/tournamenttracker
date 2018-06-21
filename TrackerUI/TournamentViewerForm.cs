@@ -125,8 +125,9 @@ namespace TrackerUI
                     foreach (MatchupModel m in matchups)
                     {
                         selectedMatchups.Add(m);
+                        //LoadMatchup(selectedMatchups.First());
                     }
-
+                    //LoadMatchup(selectedMatchups.First());
                 }
                 LoadMatchup(selectedMatchups.First());
             }
@@ -139,8 +140,10 @@ namespace TrackerUI
 
         }
         private void LoadMatchup(MatchupModel m)
-        {
+        { 
             //MatchupModel m = (MatchupModel)matchupListbox.SelectedItem;
+            //It looks like when I change to round two of GrandPrix, I get the null reference error 
+            //I think it is because there are two many <bye>s
             for (int i = 0; i < m.Entries.Count; i++)
             {
                 if (i==0)
