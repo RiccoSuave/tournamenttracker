@@ -133,11 +133,21 @@ namespace TrackerUI
                     }
                     //LoadMatchup(selectedMatchups.First());
                 }
-                LoadMatchup(selectedMatchups.First());
+                if (selectedMatchups.Count > 0)
+                {
+                    LoadMatchup(selectedMatchups.First());
+                }
+                DisplayMatchupInfo();
             }
             // true / false parameter resets or not the metadata in binging speciffied 
             //matchupsBinding.ResetBindings(false);
             //WireUpMatchUpsLists();
+        }
+        private void DisplayMatchupInfo()
+        {
+            bool isVisible = (selectedMatchups.Count > 0);
+            teamOneName.Visible = isVisible;
+            teamOneScoreLabel.Visible = isVisible;
         }
         private void tournamentName_Click(object sender, EventArgs e)
         {
@@ -174,7 +184,7 @@ namespace TrackerUI
                         if (m.Entries[1].TeamCompeting != null)
                         {
                             teamTwoName.Text = m.Entries[1].TeamCompeting.TeamName;
-                            teamTwoScoreValue.Text = m.Entries[0].Score.ToString();
+                            teamTwoScoreValue.Text = m.Entries[1].Score.ToString();
                         }
                         else
                         {
@@ -239,7 +249,7 @@ namespace TrackerUI
                         else
                         {
                             //m.Entries[0].Score = 0;
-                            MessageBox.Show("Please enter a valid score for team 1");
+                            MessageBox.Show("Please enter a valid score for team 2");
                             return;
                         }
 
@@ -253,7 +263,7 @@ namespace TrackerUI
                 m.Winner = m.Entries[0].TeamCompeting;
 
             }
-            else if (teamTwoScore < teamOneScore)
+            else if (teamTwoScore > teamOneScore)
             {
                 m.Winner = m.Entries[1].TeamCompeting;
             }
@@ -261,6 +271,16 @@ namespace TrackerUI
             {
                 MessageBox.Show("I don't handle tie games");
             }
+        }
+
+        private void teamOneScoreValue_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void teamTwoScoreValue_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
