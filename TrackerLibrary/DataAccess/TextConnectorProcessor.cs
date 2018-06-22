@@ -320,6 +320,39 @@ namespace TrackerLibrary.DataAccess.TextHelpers
             File.WriteAllLines(GlobalConfig.MatchupFile.FullFilePath(), lines);
              
         }
+        public static void UpdateMatchupToFile (this MatchupModel matchup)
+        {
+            List<MatchupModel> matchups = GlobalConfig.MatchupFile.FullFilePath()
+            .LoadFile().ConverToMatchupModels();
+            MatchupModel oldMatchup = new MatchupModel(); 
+            foreach (MatchupModel m in matchups)
+            {
+                if (m.Id == matchup.Id)
+                {
+                    oldMatchup = m;
+                }
+            }
+            matchups.Remove(oldMatchup);
+            matchups.Add(matchup);
+
+
+            foreach (MatchupEntryModel entry in matchup.Entries)
+            {
+                entry.UpdateEntryToFile();
+            }
+            List<string> lines = new List<string>();
+            // id=0, entries=1(pipe delimited by id), winner=2, matchupRounds=3
+            foreach (MatchupModel m in matchups)
+            {
+                string winner = "";
+                if (m.Winner != null)
+                {
+                    winner = m.Winner.Id.ToString();
+                }
+                lines.Add($"{ m.Id },{ ConvertMatchupEntryListToString(m.Entries) },{ winner },{ m.MatchupRound }");
+            }
+            File.WriteAllLines(GlobalConfig.MatchupFile.FullFilePath(), lines);
+        }
         
         public static void SaveEntryToFile (this MatchupEntryModel entry, string matchupEntryFile)
         {
@@ -330,6 +363,38 @@ namespace TrackerLibrary.DataAccess.TextHelpers
                 currentId = entries.OrderByDescending(x => x.Id).First().Id + 1;
             }
             entry.Id = currentId;
+            entries.Add(entry);
+            List<string> lines = new List<string>();
+            //id=0, TeamCompeting=1, Score=2, ParentMatchup=3
+            foreach (MatchupEntryModel e in entries)
+            {
+                string parent = "";
+                if (e.ParentMatchup != null)
+                {
+                    parent = e.ParentMatchup.Id.ToString();
+                }
+                string teamCompeting = "";
+                if (e.TeamCompeting != null)
+                {
+                    teamCompeting = e.TeamCompeting.Id.ToString();
+                }
+                lines.Add($"{ e.Id },{ teamCompeting },{ e.Score },{ parent }");
+            }
+            // TODO -- You may have an issue with the line below. Tim's file was GlobalConfig.MatchupEntryFile
+            File.WriteAllLines(GlobalConfig.MatchupEntriesFile.FullFilePath(), lines);
+        }
+        public static void UpdateEntryToFile(this MatchupEntryModel entry)
+        {
+            List<MatchupEntryModel> entries = GlobalConfig.MatchupEntriesFile.FullFilePath().LoadFile().ConvertToMatchupEntryModels();
+            MatchupEntryModel oldEntry = new MatchupEntryModel();
+            foreach (MatchupEntryModel e in entries)
+            {
+                if (e.Id == entry.Id)
+                {
+                    oldEntry = e;
+                }
+            }
+            entries.Remove(oldEntry);
             entries.Add(entry);
             List<string> lines = new List<string>();
             //id=0, TeamCompeting=1, Score=2, ParentMatchup=3

@@ -273,5 +273,27 @@ namespace TrackerLibrary.DataAccess
             }
             return output;
         }
+
+        public void UpdateMatchup(MatchupModel model)
+        {
+            //dbo.spMatchups_Update @id, @WinnerId
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(GlobalConfig.CnnString(db)))
+            {
+                var p = new DynamicParameters();
+                p.Add("@Id", model.Id);
+                p.Add("@WinnerId", model.Winner.Id);
+                connection.Execute("dbo.spMatchups_Update", p, commandType: CommandType.StoredProcedure);
+                // dbo.spMatchupEntrie_Update id, TeamCompetingId, Score
+                foreach (MatchupEntryModel me in model.Entries)
+                {
+                    p = new DynamicParameters();
+                    p.Add("@id", me.Id);
+                    // We also seem to have TeamCompetingId in our MatchupEntryModel; what is the difference in using TeamCompeting.Id vs. TeamCompetingId? 
+                    p.Add("@TeamCompetingId", me.TeamCompeting.Id);
+                    p.Add("@Score", me.Score);
+                    connection.Execute("dbo.spMatchupEntrie_Update", p, commandType: CommandType.StoredProcedure);
+                }
+            }
+        }
     }
 }

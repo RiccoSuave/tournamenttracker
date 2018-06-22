@@ -148,6 +148,12 @@ namespace TrackerUI
             bool isVisible = (selectedMatchups.Count > 0);
             teamOneName.Visible = isVisible;
             teamOneScoreLabel.Visible = isVisible;
+            teamOneScoreValue.Visible = isVisible;
+            teamTwoName.Visible = isVisible;
+            teamTwoScoreLabel.Visible = isVisible;
+            teamTwoScoreValue.Visible = isVisible;
+            versusLabel.Visible = isVisible;
+            scoreButton.Visible = isVisible;
         }
         private void tournamentName_Click(object sender, EventArgs e)
         {
@@ -271,6 +277,25 @@ namespace TrackerUI
             {
                 MessageBox.Show("I don't handle tie games");
             }
+            foreach (List<MatchupModel> round in tournament.Rounds)
+            {
+                foreach (MatchupModel rm in round)
+                {
+                    foreach (MatchupEntryModel me in rm.Entries)
+                    {
+                        if (me.ParentMatchup != null)
+                        {
+                            if (me.ParentMatchup.Id == m.Id)
+                            {
+                                me.TeamCompeting = m.Winner;
+                                GlobalConfig.Connection.UpdateMatchup(rm);
+                            }
+                        }
+                    }
+                }
+            }
+            LoadMatchups((int)roundDropDown.SelectedItem);
+            GlobalConfig.Connection.UpdateMatchup(m);
         }
 
         private void teamOneScoreValue_TextChanged(object sender, EventArgs e)
