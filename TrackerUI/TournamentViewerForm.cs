@@ -19,6 +19,7 @@ namespace TrackerUI
         private TournamentModel tournament;
         
         BindingList<int> rounds = new BindingList<int>();
+        
         BindingList<MatchupModel> selectedMatchups = new BindingList<MatchupModel>();
         // Lookup binding source documentation later; findout why it was the old way of doing things 
         // Also try to figure out why this or the binding list did not fix the issue. Tim fixes this later
@@ -44,8 +45,9 @@ namespace TrackerUI
         private void WireUpLists()
         {
             //roundDropDown.DataSource = null;
-            
+
             roundDropDown.DataSource = rounds;
+            //roundDropDown.DataSource = tournament.Rounds;
             matchupListbox.DataSource = selectedMatchups;
             matchupListbox.DisplayMember = "DisplayName";   
 
@@ -294,18 +296,10 @@ namespace TrackerUI
                     }
                 }
             }
+
             LoadMatchups((int)roundDropDown.SelectedItem);
+
             GlobalConfig.Connection.UpdateMatchup(m);
-        }
-
-        private void teamOneScoreValue_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void teamTwoScoreValue_TextChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }
