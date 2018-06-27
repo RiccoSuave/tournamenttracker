@@ -62,16 +62,30 @@ namespace TrackerUI
             rounds.Add(1);
            
             int currRound = 1;
-            
+
             foreach (List<MatchupModel> matchups in tournament.Rounds)
             {
-                if (matchups.First().MatchupRound > currRound)
+
+                //MessageBox.Show(matchups.First().DisplayName);
+                //MessageBox.Show(matchups.First().MatchupRound.ToString());
+
+                //MessageBox.Show(tournament.Rounds.ToString());
+                foreach (MatchupModel mm in matchups)
                 {
-                    currRound = matchups.First().MatchupRound;
-                    rounds.Add(currRound);
-                    
+                    if (mm.MatchupRound > currRound)
+                    {
+                        currRound = mm.MatchupRound;
+                        rounds.Add(currRound);
+                    }
                 }
-            }
+                //if (matchups.First().MatchupRound > currRound)
+
+                //{
+
+                //    currRound = matchups.First().MatchupRound;
+                //    rounds.Add(currRound);
+                //}
+                }
             //roundsBinding.ResetBindings(false);
             //WireUpRoundsLists();
             // What adding the statement below does is it creates round one as soon as we load all the matchups 
@@ -113,33 +127,50 @@ namespace TrackerUI
             //int round = (int)roundDropDown.SelectedItem;
             foreach (List<MatchupModel> matchups in tournament.Rounds)
             {
-                if (matchups.First().MatchupRound == round)
+                selectedMatchups.Clear();
+                foreach (MatchupModel mm in matchups)
                 {
-                    // In order to fix the type mismatch issue between a bindng list and an actual list, we 
-                    // initialized a new BindingList and passed to the constructor an object of type iList,
-                    // which list is of type iList.
-                    // Since we foundout we could not instantiate a new rounds list, we know that we can not 
-                    // instantiate a new matchups list, done below,  if we want the matchups to populate between 
-                    // the dashboard and TournamentViewer form. 
-                    //selectedMatchups = new BindingList<MatchupModel> (matchups);
-                    // instead...
-                    selectedMatchups.Clear();
-                    foreach (MatchupModel m in matchups)
+                    
+                    if (mm.MatchupRound == round)
                     {
-                        if ( m.Winner == null || !unplayedOnlyCheckbox.Checked)
+                        if (mm.Winner == null || !unplayedOnlyCheckbox.Checked)
                         {
-                            selectedMatchups.Add(m);
+                            selectedMatchups.Add(mm);
                         }
-                        
-                        //LoadMatchup(selectedMatchups.First());
                     }
-                    //LoadMatchup(selectedMatchups.First());
+                    if (selectedMatchups.Count > 0)
+                    {
+                        LoadMatchup(selectedMatchups.First());
+                    }
+                    DisplayMatchupInfo();
                 }
-                if (selectedMatchups.Count > 0)
-                {
-                    LoadMatchup(selectedMatchups.First());
-                }
-                DisplayMatchupInfo();
+                //if (matchups.First().MatchupRound == round)
+                //{
+                // In order to fix the type mismatch issue between a bindng list and an actual list, we 
+                // initialized a new BindingList and passed to the constructor an object of type iList,
+                // which list is of type iList.
+                // Since we foundout we could not instantiate a new rounds list, we know that we can not 
+                // instantiate a new matchups list, done below,  if we want the matchups to populate between 
+                // the dashboard and TournamentViewer form. 
+                //selectedMatchups = new BindingList<MatchupModel> (matchups);
+                // instead...
+                //selectedMatchups.Clear();
+                //foreach (MatchupModel m in matchups)
+                //{
+                //    if ( m.Winner == null || !unplayedOnlyCheckbox.Checked)
+                //    {
+                //        selectedMatchups.Add(m);
+                //    }
+
+                //    //LoadMatchup(selectedMatchups.First());
+                //}
+                ////LoadMatchup(selectedMatchups.First());
+                //}
+                //if (selectedMatchups.Count > 0)
+                //{
+                //    LoadMatchup(selectedMatchups.First());
+                //}
+                //DisplayMatchupInfo();
             }
             // true / false parameter resets or not the metadata in binging speciffied 
             //matchupsBinding.ResetBindings(false);
