@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,8 +21,112 @@ namespace TrackerLibrary
             int byes = NumberOfByes(rounds, randomizedTeams.Count);
             model.Rounds.Add(CreateFirstRound(byes, randomizedTeams));
             CreateOtherRounds(model, rounds);
+            //UpdateTournamentResults(model);
         }
-        // This method seems to add one more entry - I think I have watch episode 18 again
+        public static void UpdateTournamentResults (TournamentModel model)
+        {
+            List<MatchupModel> toScore = new List<MatchupModel>();
+            foreach (List<MatchupModel> round in model.Rounds)
+            {
+                foreach ( MatchupModel rm in round)
+                {
+                    if ( rm.Winner == null && (rm.Entries.Any (x => x.Score != 0) || rm.Entries.Count == 1))
+                    {
+                        toScore.Add(rm);
+                    }
+                }
+            }
+            MarkWinnersInMatchups(toScore);
+            AdvanceWinners(toScore, model);
+
+            toScore.ForEach(x => GlobalConfig.Connection.UpdateMatchup(x));
+            //GlobalConfig.Connection.UpdateMatchup(m);
+        }
+        private static void AdvanceWinners(List<MatchupModel> models, TournamentModel tournament)
+        {
+            foreach (MatchupModel m in models)
+            {
+                foreach (List<MatchupModel> round in tournament.Rounds)
+                {
+                    foreach (MatchupModel rm in round)
+                    {
+                        foreach (MatchupEntryModel me in rm.Entries)
+                        {
+                            if (me.ParentMatchup != null)
+                            {
+                                if (me.ParentMatchup.Id == m.Id)
+                                {
+                                    me.TeamCompeting = m.Winner;
+                                    GlobalConfig.Connection.UpdateMatchup(rm);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
+        private static void MarkWinnersInMatchups(List<MatchupModel> models)
+        {
+            //greater or lesser
+            string greaterWins = ConfigurationManager.AppSettings["greaterWins"];
+            // zero means false or low score wins 
+            foreach (MatchupModel m in models)
+            {
+
+                // check for bye week entry
+                if (greaterWins == "0")
+                {
+                    if (m.Entries.Count == 1)
+                    {
+                        m.Winner = m.Entries[0].TeamCompeting;
+                        continue;
+                    }
+                    if (m.Entries[0].Score < m.Entries[1].Score)
+                    {
+                        m.Winner = m.Entries[0].TeamCompeting;
+                    }
+                    else if (m.Entries[1].Score < m.Entries[0].Score)
+                    {
+                        m.Winner = m.Entries[1].TeamCompeting;
+                    }
+                    else
+                    {
+                        throw new Exception("We don't allow ties in this application");
+                    }
+                }
+                else
+                {
+                    // 1 means true or high score wins 
+                    if ((m.Entries.Count == 1) || (m.Entries[0].Score > m.Entries[1].Score))
+                    {
+                        m.Winner = m.Entries[0].TeamCompeting;
+                    }
+                    else if (m.Entries[1].Score > m.Entries[0].Score)
+                    {
+                        m.Winner = m.Entries[1].TeamCompeting;
+                    }
+                    else
+                    {
+                        throw new Exception("We don't allow ties in this application");
+                    }
+                }
+            }
+            //if (teamOneScore > teamTwoScore)
+            //{
+            //    // Team one wins 
+            //    m.Winner = m.Entries[0].TeamCompeting;
+
+            //}
+            //else if (teamTwoScore > teamOneScore)
+            //{
+            //    m.Winner = m.Entries[1].TeamCompeting;
+            //}
+            //else
+            //{
+            //    MessageBox.Show("I don't handle tie games");
+            //}
+        }
         private static void CreateOtherRounds(TournamentModel model, int rounds)
         {
             int round = 2;

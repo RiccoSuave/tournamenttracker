@@ -50,7 +50,7 @@ namespace TrackerLibrary
                 p.LastName = lastNameValue.Text;
                 p.EmailAddress = emailValue.Text;
                 p.CellPhoneNumber = cellPhoneValue.Text;
-                p = GlobalConfig.Connection.CreatePerson(p);
+                GlobalConfig.Connection.CreatePerson(p);
                 selectedTeamMembers.Add(p);
                 WireUpLists();
                 firstNameValue.Text = "";

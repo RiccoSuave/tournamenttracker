@@ -212,6 +212,7 @@ namespace TrackerUI
             this.PrizesListBox.Name = "PrizesListBox";
             this.PrizesListBox.Size = new System.Drawing.Size(373, 182);
             this.PrizesListBox.TabIndex = 22;
+            this.PrizesListBox.SelectedIndexChanged += new System.EventHandler(this.PrizesListBox_SelectedIndexChanged);
             // 
             // prizesLabel
             // 
