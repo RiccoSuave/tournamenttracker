@@ -67,6 +67,7 @@ namespace TrackerUI
             this.tournamentNameValue.Name = "tournamentNameValue";
             this.tournamentNameValue.Size = new System.Drawing.Size(342, 50);
             this.tournamentNameValue.TabIndex = 11;
+            //this.tournamentNameValue.TextChanged += new System.EventHandler(this.tournamentNameValue_TextChanged);
             // 
             // tournamentPlayersLabel
             // 
@@ -169,7 +170,7 @@ namespace TrackerUI
             this.tournamentTeamsListbox.Name = "tournamentTeamsListbox";
             this.tournamentTeamsListbox.Size = new System.Drawing.Size(373, 182);
             this.tournamentTeamsListbox.TabIndex = 19;
-            this.tournamentTeamsListbox.SelectedIndexChanged += new System.EventHandler(this.tournamentTeamsListbox_SelectedIndexChanged);
+            //this.tournamentTeamsListbox.SelectedIndexChanged += new System.EventHandler(this.tournamentTeamsListbox_SelectedIndexChanged);
             // 
             // removeSelectedPlayerButton
             // 
@@ -212,7 +213,7 @@ namespace TrackerUI
             this.PrizesListBox.Name = "PrizesListBox";
             this.PrizesListBox.Size = new System.Drawing.Size(373, 182);
             this.PrizesListBox.TabIndex = 22;
-            this.PrizesListBox.SelectedIndexChanged += new System.EventHandler(this.PrizesListBox_SelectedIndexChanged);
+            //this.PrizesListBox.SelectedIndexChanged += new System.EventHandler(this.PrizesListBox_SelectedIndexChanged);
             // 
             // prizesLabel
             // 

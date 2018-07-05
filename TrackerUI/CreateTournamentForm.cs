@@ -126,20 +126,10 @@ namespace TrackerUI
             tm.EnteredTeams = selectedTeams;
             // Create all of the team entries 
             GlobalConfig.Connection.CreateTournament(tm);
-            
+            tm.AlertUsersToNewRound();
             TournamentViewerForm frm = new TournamentViewerForm(tm);
             frm.Show();
             this.Close();
-        }
-
-        private void tournamentTeamsListbox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void PrizesListBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }
