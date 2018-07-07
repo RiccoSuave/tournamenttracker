@@ -32,7 +32,7 @@ namespace TrackerLibrary
             {
                 foreach ( MatchupModel rm in round)
                 {
-                    if ( rm.Winner == null && (rm.Entries.Any (x => x.Score != 0) || rm.Entries.Count == 1))
+                    if ( rm.Winner == null && (rm.Entries.Any (x =>x.Score != 0) || rm.Entries.Count == 1))
                     {
                         toScore.Add(rm);
                     }
