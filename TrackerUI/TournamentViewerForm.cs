@@ -14,13 +14,14 @@ namespace TrackerUI
 {
     public partial class TournamentViewerForm : Form
     {
-        private string storageChoice;
-        DatabaseType db = new DatabaseType();
+        //private string storageChoice;
+        //DatabaseType db = new DatabaseType();
         private TournamentModel tournament;
         
         BindingList<int> rounds = new BindingList<int>();
         
         BindingList<MatchupModel> selectedMatchups = new BindingList<MatchupModel>();
+    
         // Lookup binding source documentation later; findout why it was the old way of doing things 
         // Also try to figure out why this or the binding list did not fix the issue. Tim fixes this later
         // but it is not clear what was the root cause. 
@@ -29,15 +30,27 @@ namespace TrackerUI
         public TournamentViewerForm(TournamentModel tournamentModel)
         {
             InitializeComponent();
+
             tournament = tournamentModel;
+
+            tournament.OnTournamentComplete += Tournament_OnTournamentComplete;  
+
             WireUpLists();
+
             // We deleted the method below to go from having two methods of WireUpRoundsList and WireUpMatchupsList
             // to one of just one wireup method call WireUpLists();
             //WireUpMatchUpsLists();
             LoadFormData();
+
             LoadRounds();
 
         }
+
+        private void Tournament_OnTournamentComplete(object sender, DateTime e)
+        {
+            this.Close();
+        }
+
         private void LoadFormData ()
         {
             tournamentName.Text = tournament.TournamentName;
@@ -48,7 +61,8 @@ namespace TrackerUI
 
             roundDropDown.DataSource = rounds;
             //roundDropDown.DataSource = tournament.Rounds;
-            matchupListbox.DataSource = selectedMatchups;
+            matchupListbox.DataSource = tournament.Rounds;
+            //matchupListbox.DataSource = selectedMatchups;
             matchupListbox.DisplayMember = "DisplayName";   
 
 
@@ -84,38 +98,39 @@ namespace TrackerUI
 
                 //    currRound = matchups.First().MatchupRound;
                 //    rounds.Add(currRound);
-                //}
-                }
+                //}  I move the statement below from outside of the foreach loop 
+                LoadMatchups(1);
+            }
             //roundsBinding.ResetBindings(false);
             //WireUpRoundsLists();
             // What adding the statement below does is it creates round one as soon as we load all the matchups 
-            LoadMatchups(1);
+            
         }
-        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            ComboBox comboBox = (ComboBox)sender;
+        //private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+            //ComboBox comboBox = (ComboBox)sender;
             //I added this to implement the storage pull down menu
-            storageChoice = (string)comboBox.SelectedItem;
+            //storageChoice = (string)comboBox.SelectedItem;
             //if (storageChoice.Equals(DatabaseType.Sql)) db = DatabaseType.Sql;
             //if (storageChoice.Equals(DatabaseType.TextFile)) db = DatabaseType.TextFile;
             //if (storageChoice.Equals(DatabaseType.All)) db = DatabaseType.All;
             //or I can say...
             //if (storageChoice.Equals(DatabaseType.All)) db = DatabaseType.Sql & DatabaseType.TextFile;
 
-        }
-        private void InitialComboBox()
-        {
-            string[] storageOptions = new string[] { "Sql", "TextFile", "All" };
-            comboBox2.Items.AddRange(storageOptions);
-            this.comboBox2.SelectedIndexChanged += new System.EventHandler(comboBox2_SelectedIndexChanged);
-            foreach (string choice in storageOptions)
-            {
-                DatabaseType dbb = new DatabaseType();
-                if (Enum.TryParse(choice, true, out dbb))
-                    db = dbb;
-            }           
-            //TODO - write an error message to the screen if the result is false above
-        }
+        //}
+        //private void InitialComboBox()
+        //{
+        //    string[] storageOptions = new string[] { "Sql", "TextFile", "All" };
+        //    comboBox2.Items.AddRange(storageOptions);
+        //    this.comboBox2.SelectedIndexChanged += new System.EventHandler(comboBox2_SelectedIndexChanged);
+        //    foreach (string choice in storageOptions)
+        //    {
+        //        DatabaseType dbb = new DatabaseType();
+        //        if (Enum.TryParse(choice, true, out dbb))
+        //            db = dbb;
+        //    }           
+        //    //TODO - write an error message to the screen if the result is false above
+        //}
         // The method below will update the event every time the user changes / chooses a different item from 
         // the list
         private void roundDropDown_SelectedIndexChanged(object sender, EventArgs e)

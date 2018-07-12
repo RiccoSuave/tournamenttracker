@@ -1,0 +1,3 @@
+The issues seems to be the way files are saved to TournamentFile.csv. 
+I deleted all the files and still TournamentFile.csv is full and curropted. 
+I need to findout why it does not load the matchups when I initially create a trournament, and work my way from there. 

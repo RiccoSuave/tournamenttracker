@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using TrackerLibrary.Models;
 
 namespace TrackerLibrary.DataAccess.TextHelpers
@@ -428,6 +429,7 @@ namespace TrackerLibrary.DataAccess.TextHelpers
             {
                 lines.Add($"{ tm.Id },{ tm.TournamentName },{ tm.EntryFee },{ ConvertTeamListToString(tm.EnteredTeams) },{ ConvertPrizeListToString(tm.Prizes) },{ ConvertRoundListToString(tm.Rounds) }");
             }
+            MessageBox.Show($"I am about to save this to the tournaments {lines.ToString()}");
             File.WriteAllLines(GlobalConfig.TournamentFile.FullFilePath(), lines);
         }
         private static string ConvertRoundListToString(List<List<MatchupModel>> rounds)
