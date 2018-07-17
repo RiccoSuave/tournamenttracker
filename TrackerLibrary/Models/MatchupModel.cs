@@ -52,7 +52,6 @@ namespace TrackerLibrary.Models
                         output = $"Matchup not yet determined";
                         break;
                     }
-                    
                 }
                 return output;
             }

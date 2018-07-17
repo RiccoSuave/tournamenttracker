@@ -95,7 +95,7 @@ namespace TrackerLibrary.DataAccess.TextHelpers
         {
             string[] ids = input.Split('|');
             List<MatchupEntryModel> output = new List<MatchupEntryModel>();
-            List<string> entries = GlobalConfig.MatchupEntriesFile.FullFilePath().LoadFile();
+            List<string> entries = GlobalConfig.MatchupEntryFile.FullFilePath().LoadFile();
             List<string> matchingEntries = new List<string>();
             foreach (string id in ids)
             {
@@ -357,7 +357,7 @@ namespace TrackerLibrary.DataAccess.TextHelpers
         
         public static void SaveEntryToFile (this MatchupEntryModel entry)
         {
-            List<MatchupEntryModel> entries = GlobalConfig.MatchupEntriesFile.FullFilePath().LoadFile().ConvertToMatchupEntryModels();
+            List<MatchupEntryModel> entries = GlobalConfig.MatchupEntryFile.FullFilePath().LoadFile().ConvertToMatchupEntryModels();
             int currentId = 1;
             if (entries.Count > 0)
             {
@@ -381,12 +381,12 @@ namespace TrackerLibrary.DataAccess.TextHelpers
                 }
                 lines.Add($"{ e.Id },{ teamCompeting },{ e.Score },{ parent }");
             }
-            // TODO -- You may have an issue with the line below. Tim's file was GlobalConfig.MatchupEntryFile
-            File.WriteAllLines(GlobalConfig.MatchupEntriesFile.FullFilePath(), lines);
+            
+            File.WriteAllLines(GlobalConfig.MatchupEntryFile.FullFilePath(), lines);
         }
         public static void UpdateEntryToFile(this MatchupEntryModel entry)
         {
-            List<MatchupEntryModel> entries = GlobalConfig.MatchupEntriesFile.FullFilePath().LoadFile().ConvertToMatchupEntryModels();
+            List<MatchupEntryModel> entries = GlobalConfig.MatchupEntryFile.FullFilePath().LoadFile().ConvertToMatchupEntryModels();
             MatchupEntryModel oldEntry = new MatchupEntryModel();
             foreach (MatchupEntryModel e in entries)
             {
@@ -413,8 +413,8 @@ namespace TrackerLibrary.DataAccess.TextHelpers
                 }
                 lines.Add($"{ e.Id },{ teamCompeting },{ e.Score },{ parent }");
             }
-            // TODO -- You may have an issue with the line below. Tim's file was GlobalConfig.MatchupEntryFile
-            File.WriteAllLines(GlobalConfig.MatchupEntriesFile.FullFilePath(), lines);
+           
+            File.WriteAllLines(GlobalConfig.MatchupEntryFile.FullFilePath(), lines);
         }
         public static void SaveToTournamentFile(this List<TournamentModel> models) {
             //id = 0

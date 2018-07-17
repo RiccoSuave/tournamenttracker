@@ -117,7 +117,7 @@ namespace TrackerUI
             tm.EntryFee = fee;
             tm.EnteredTeams = selectedTeams;
             // Create our matchups
-            //TODO -- Wireup matchup  
+             
             TournamentLogic.CreateRounds(tm);
             // Create Tournament Entry 
 
@@ -126,8 +126,9 @@ namespace TrackerUI
             tm.EnteredTeams = selectedTeams;
             // Create all of the team entries 
             GlobalConfig.Connection.CreateTournament(tm);
-            tm.AlertUsersToNewRound();
+            
             TournamentViewerForm frm = new TournamentViewerForm(tm);
+            tm.AlertUsersToNewRound();
             frm.Show();
             this.Close();
         }
