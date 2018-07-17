@@ -1,3 +1,5 @@
+In this document: 1- How to show all databases in sqllite. 
+2- How to collect logs for git. 
 After installing microsoft sql server I used this link: https://docs.microsoft.com/en-us/sql/relational-databases/databases/view-a-list-of-databases-on-an-instance-of-sql-server to find the command to show all the available databases within microsoft sql, which come by default. Here is the output: 
 --
 -- run below commmand from command prompt
@@ -85,3 +87,5 @@ msdb                                                                            
 
 (4 rows affected)
 1>
+
+2- type "setx GIT_TRACE %UserProfile%\git.log" at a command prompt, restart visual studio, and the logs will be in git.log. Once you resolved the issue turn off logging by issueing "setx GIT_TRACE """ command. 

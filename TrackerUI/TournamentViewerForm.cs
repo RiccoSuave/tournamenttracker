@@ -48,7 +48,9 @@ namespace TrackerUI
             
             roundDropDown.DataSource = rounds;
             matchupListbox.DataSource = selectedMatchups;
-            matchupListbox.DisplayMember = "DisplayName";   
+            matchupListbox.DisplayMember = "DisplayName";
+            teamOneScoreValue.Text = "0";
+            teamTwoScoreValue.Text = "0";
         }
         private void LoadRounds()
         {
@@ -110,7 +112,7 @@ namespace TrackerUI
             foreach (MatchupModel mm in selectedMatchups)
             {
                 LoadMatchup(mm);
-                WireUpLists();
+                WireUpLists();   
             }
         } 
         
@@ -270,6 +272,32 @@ namespace TrackerUI
             }
             
             LoadMatchups((int)roundDropDown.SelectedItem);
+        }
+
+        private void teamOneScoreValue_TextChanged(object sender, EventArgs e)
+        {
+            string errorMessage = ValidateData();
+            if (errorMessage.Length > 0)
+            {
+                MessageBox.Show($"input error : {errorMessage}");
+                return;
+            }
+
+            LoadMatchups((int)roundDropDown.SelectedItem);
+            
+        }
+
+        private void teamTwoScoreValue_TextChanged(object sender, EventArgs e)
+        {
+            string errorMessage = ValidateData();
+            if (errorMessage.Length > 0)
+            {
+                MessageBox.Show($"input error : {errorMessage}");
+                return;
+            }
+
+            LoadMatchups((int)roundDropDown.SelectedItem);
+            
         }
     }
 }
