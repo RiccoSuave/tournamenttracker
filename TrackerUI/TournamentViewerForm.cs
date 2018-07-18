@@ -49,8 +49,6 @@ namespace TrackerUI
             roundDropDown.DataSource = rounds;
             matchupListbox.DataSource = selectedMatchups;
             matchupListbox.DisplayMember = "DisplayName";
-            teamOneScoreValue.Text = "0";
-            teamTwoScoreValue.Text = "0";
         }
         private void LoadRounds()
         {
@@ -62,20 +60,17 @@ namespace TrackerUI
 
             foreach (List<MatchupModel> matchups in tournament.Rounds)
             {
-                if (matchups.First().MatchupRound > currRound)
+                foreach (MatchupModel mm in matchups)
                 {
-                    currRound = matchups.First().MatchupRound;
-                    rounds.Add(currRound);
+                    if (mm.MatchupRound > currRound)
+                    {
+                        currRound = mm.MatchupRound;
+                        rounds.Add(currRound);
+                    }
                 }
-                //foreach (MatchupModel mm in matchups)
-                //{
-                //    if (mm.MatchupRound > currRound)
-                //    {
-                //        currRound = mm.MatchupRound;
-                //        rounds.Add(currRound);
-                //    }
-                //}
             }
+            WireUpLists();
+
             LoadMatchups(1);
         }
         private void roundDropDown_SelectedIndexChanged(object sender, EventArgs e)
@@ -84,36 +79,29 @@ namespace TrackerUI
         }
         private void LoadMatchups(int round)
         {
-            //int rounds = (int)roundDropDown.SelectedItem;
-            //selectedMatchups.Clear();
+            int rounds = (int)roundDropDown.SelectedItem;
+
             foreach (List<MatchupModel> matchups in tournament.Rounds)
             {
-                selectedMatchups = new BindingList<MatchupModel>(matchups.Where(x => x.MatchupRound == round).ToList());
+                if (matchups.First().MatchupRound == round)
+                {
+                    selectedMatchups.Clear();
+                    foreach (MatchupModel m in matchups)
+                    {
+                        if (m.Winner == null || !unplayedOnlyCheckbox.Checked)
+                        {
+                            selectedMatchups.Add(m);
+                        }
+                    }
+                    LoadMatchup(selectedMatchups.First());
+                }
+                if (selectedMatchups.Count > 0)
+                {
+                    LoadMatchup(selectedMatchups.First());
+                }
+                DisplayMatchupInfo();
             }
-
-            /****************************************added the line above*****************************/
-            //foreach (List<MatchupModel> matchups in tournament.Rounds)
-            //{
-            //if (matchups.First().MatchupRound == round)
-            //{
-            //    selectedMatchups.Clear();
-            //    foreach (MatchupModel m in matchups)
-            //    {
-            //        selectedMatchups.Add(m);   
-            //    }
-            // selectedMatchups is a binding list, and we need to create a new binding list and 
-            // pass in an IList type, which matchups list is. I did not delete so it can be used 
-            // as a note for future potential issues 
-            //selectedMatchups = new BindingList<MatchupModel> (matchups);
-            //}
-            //}
-            //LoadMatchup(selectedMatchups.First());
-
-            foreach (MatchupModel mm in selectedMatchups)
-            {
-                LoadMatchup(mm);
-                WireUpLists();   
-            }
+            WireUpLists();
         } 
         
         private void DisplayMatchupInfo()
@@ -190,8 +178,8 @@ namespace TrackerUI
             string output = "";
             double teamOneScore = 0;
             double teamTwoScore = 0;
-            bool scoreOneValid = double.TryParse(teamOneScoreValue.Text, out teamOneScore);
-            bool scoreTwoValid = double.TryParse(teamTwoScoreValue.Text, out teamTwoScore);
+            bool scoreOneValid = double.TryParse(teamOneScoreValue.Text, out teamOneScore) || (teamOneScoreValue.Text == "0");
+            bool scoreTwoValid = double.TryParse(teamTwoScoreValue.Text, out teamTwoScore) || teamTwoScoreValue.Text == "0";
             if (!scoreOneValid)
             {
                 output = "The Score One value is not a valid number.  ";
@@ -272,32 +260,6 @@ namespace TrackerUI
             }
             
             LoadMatchups((int)roundDropDown.SelectedItem);
-        }
-
-        private void teamOneScoreValue_TextChanged(object sender, EventArgs e)
-        {
-            string errorMessage = ValidateData();
-            if (errorMessage.Length > 0)
-            {
-                MessageBox.Show($"input error : {errorMessage}");
-                return;
-            }
-
-            LoadMatchups((int)roundDropDown.SelectedItem);
-            
-        }
-
-        private void teamTwoScoreValue_TextChanged(object sender, EventArgs e)
-        {
-            string errorMessage = ValidateData();
-            if (errorMessage.Length > 0)
-            {
-                MessageBox.Show($"input error : {errorMessage}");
-                return;
-            }
-
-            LoadMatchups((int)roundDropDown.SelectedItem);
-            
         }
     }
 }

@@ -115,6 +115,8 @@ namespace TrackerLibrary
                 {
                     output += 1;
                 }
+                // TODO--Tim just returns output here. Does not have the else statement and does not decrement it. Also
+                // does not call CompleteTournament(model) 
                 else
                 {
                     return output;
@@ -281,8 +283,7 @@ namespace TrackerLibrary
                     currMatchup.Entries.Add(new MatchupEntryModel { ParentMatchup = match });
                     if (currMatchup.Entries.Count > 1)
                     {
-                        currMatchup.MatchupRound = round; 
-
+                        currMatchup.MatchupRound = round;
                         currRound.Add(currMatchup);
                         currMatchup = new MatchupModel();
                     }
